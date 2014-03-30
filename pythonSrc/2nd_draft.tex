@@ -1,0 +1,67 @@
+\documentclass[twocolumn, a4paper]{ieicejsp}
+\usepackage{newenum}
+\usepackage{epsfig}
+\usepackage{wrapfig}
+
+\title{
+    {\bf NMFを用いたギター演奏の自動採譜の検討\\}
+    {\normalsize AN CONSIDERATION OF AUTOMATIC TRANSCRIPTION OF GUITAR PLAY USING NMF}
+}
+
+\author{
+    大塚匡紀\\ Masaki Otsuka\and
+    北原鉄朗\\ Tetsuro Kitahara
+}
+
+\affliate{
+    日本大学大学院 総合基礎科学研究科 地球情報数理科学専攻\\
+    Depatment of Computer Science and System Analysis, College of Humanities and Sciences, Nihon University
+}
+\renewcommand{\deg}{\mbox{$^\circ$}}
+
+\begin{document}
+\maketitle
+
+\section{はじめに}
+  ギター型のMIDI入力機器（MIDIギター）は、使い慣れた楽器で演奏情報を入力できる点で、DAWなどで作曲するギタリストには有用であるが、弦の振動をピックアップで取得するため、ピッキングの取りこぼしなどが発生し、MIDIキーボードに比べると入力される演奏情報の正確さに難がある。本研究では、非負値行列因子分解（NMF）による音響信号処理とMIDIギターピックアップによる処理とを統合することで、MIDIデータ化（本稿ではこれを「採譜」と称する）の高精度化を目指す。本稿では、その予備検討として、同一旋律に対するNMFによる採譜結果とMIDIギターピックアップによる採譜結果とを比較し、得意・不得意な点を考察する。
+
+\section{NMFによる採譜手法}
+\subsection{予備演奏による基底ベクトルの推定}
+本演奏に先立ち、本演奏に用いるのと全く同じギターを用いて、各弦の各フレットを一音ずつ順番に演奏する。その演奏のスペクトログラムVを求める（サンプリング周波数：44100Hz、窓幅：8092、シフト幅：xxxx）と、NMFを用いてVを2つの非負値行列\texbf{W}, \texbf{H}の積に分解する：
+\begin{equation}
+    \mathbf{V} \cong \mathbf{W}\mathbf{H}
+\end{equation}
+Wはxxxxxx、Hはxxxxxxを表す。
+（各基底に対してMIDIノートナンバーを関連付ける方法を述べる。場合によっては基底の統合も。）
+
+
+
+本研究では、音響信号解析での自動採譜にNMFを用いた。以下より本研究で用いた数式を示す。短時間フーリエ変換(STFT)によって得られたスペクトログラムを非負値行列\textbf{V}とする。そして、\textbf{V}をNMFを用いて分解すると、非負値行列\textbf{W}と非負値行列\textbf{H}の積の形となり、以下のようになる。
+\begin{equation}
+    \mathbf{V} \cong \mathbf{W}\mathbf{H}
+\end{equation}
+しかし、NMFはリアルタイムでの自動採譜には対応していない。そこで本研究では、採譜前にギターの全フレットの音(異弦同音区別する)を1音づつ演奏することを条件とし、以下のような数式に変形することによりｊリアルタイムでの自動採譜に対応した。
+\begin{equation}
+    \mathbf{W}^{-1}\mathbf{V} \cong \mathbf{H}
+\end{equation}
+\begin{equation}
+    \mathbf{W}^{-1}\mathbf{v} \cong \mathbf{h}
+\end{equation}
+(2)の式における\textbf{v}はリアルタイムに入力されるギター演奏を表しており、\textbf{h}は入力されたギター演奏のリズムを表している。ここで、\textbf{W}は正方行列ではないため、\textbf{W}-1は擬似逆行列となる。
+
+\section{実験結果}
+\subsection{方法}
+
+\section{おわりに}
+
+
+\begin{thebibliography}{9} \itemsep=-1mm
+\bibitem{Oh2012} 黄 楊暘 他:　``マイクロホンアレイを用いた複数人対話からの発話区間検出 および話者方向推定の評価手法'', 
+ロボット学会学術講演会, 3D1-4, 2012.
+
+\bibitem{hark}http://winnie.kuis.kyoto-u.ac.jp/HARK/
+
+\bibitem{Schmidt1986} R. O. Schmidt: ``Multiple Emitter Location and Signal Parameter Estimation'', {\it IEEE Trans. Antennas and Propagation}, {\bf 34}, 3, pp.276--280, 1986.
+\end{thebibliography}
+
+\end{document}
